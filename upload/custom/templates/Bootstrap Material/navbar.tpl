@@ -25,7 +25,7 @@
 		  {/if}
 		{/foreach}
 	  </ul>
-	
+
 	  <ul class="nav navbar-nav">
 	    {if isset($MESSAGING_LINK)}
 	    {* Private messages and alerts *}
@@ -37,7 +37,7 @@
 			<a class="dropdown-item" href="{$MESSAGING_LINK}">{$VIEW_MESSAGES}</a>
 		  </div>
 		</li>
-		
+
 		<li class="nav-item dropdown alert-dropdown">
 		  <a href="#" class="nav-link dropdown-toggle no-caret" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span style="margin: -10px 0px; font-size: 16px;"><i class="fa fa-flag"></i> <div style="display: inline;" id="alerts"></div></span></a>
 		  <div class="dropdown-menu alert-dropdown-menu">
@@ -47,7 +47,7 @@
 		  </div>
 		</li>
 		{/if}
-	  
+
 		{foreach from=$USER_AREA key=name item=item}
 		  {if isset($item.items)}
 			{* Dropdown *}
@@ -70,6 +70,33 @@
 			</li>
 		  {/if}
 		{/foreach}
+
+		{if isset($USER_DROPDOWN)}
+		  {foreach from=$USER_DROPDOWN key=name item=item}
+		    {if isset($item.items)}
+		      {* Dropdown *}
+		      <li class="nav-item dropdown">
+		      	<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+              {if isset($LOGGED_IN_USER)}<img src="{$LOGGED_IN_USER.avatar}" alt="{$LOGGED_IN_USER.username}" class="rounded" style="max-height:25px;max-width:25px;"/>{/if} {$item.title}
+						</a>
+            <div class="dropdown-menu dropdown-menu-right">
+              {foreach from=$item.items item=dropdown}
+                {if isset($dropdown.separator)}
+                  <div class="dropdown-divider"></div>
+                {else}
+                  <a class="dropdown-item" href="{$dropdown.link}" target="{$dropdown.target}">{$dropdown.title}</a>
+                {/if}
+              {/foreach}
+            </div>
+          </li>
+        {else}
+          {* Normal link *}
+          <li class="nav-item{if isset($item.active)} active{/if}" style="padding-right:10px;">
+            <a class="nav-link" href="{$item.link}" target="{$item.target}">{$item.title}</a>
+          </li>
+        {/if}
+      {/foreach}
+    {/if}
 	  </ul>
     </div>
   </div>
