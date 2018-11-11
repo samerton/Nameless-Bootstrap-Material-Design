@@ -17,9 +17,9 @@
 	{/if}
 	<div class="row">
 		{foreach from=$SITES item=site}
-		  <div class="col-6">
-			<a class="btn btn-lg btn-block btn-primary" href="{$site.url}" target="_blank" role="button">{$site.name}</a>
-			</br>
+		  <div class="col-md-6">
+			<a class="btn btn-lg btn-block btn-primary" style="overflow:hidden;" href="{$site.url}" target="_blank" role="button">{$site.name}</a>
+			<br />
 		  </div>
 		{/foreach}
 	</div>
