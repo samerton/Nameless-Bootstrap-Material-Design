@@ -1,3 +1,4 @@
+{include file='header.tpl'}
 {include file='navbar.tpl'}
 
 <div class="container">
@@ -26,8 +27,12 @@
 			
 			<div class="form-group">
 			  <label for="InputTo">{$TO} <small><em>{$SEPARATE_USERS_WITH_COMMAS}</em></small></label>
-			  <input class="form-control" type="text" id="InputTo" name="to" {if isset($TO_USER)}value="{$TO_USER}"{/if}data-provide="typeahead" data-items="4" data-source='[{$ALL_USERS}]'>
+			  <input class="form-control" type="text" id="InputTo" name="to" {if isset($TO_USER)}value="{$TO_USER}"{/if}>
 			</div>
+
+			<script type="text/javascript">
+			  let allUsers = [{$ALL_USERS}];
+			</script>
 			
 			{if !isset($MARKDOWN)}
 			<div class="form-group">
@@ -42,7 +47,7 @@
 		
 			<div class="form-group">
 			  <input type="hidden" name="token" value="{$TOKEN}">
-			  <input type="submit" name="{$SUBMIT}" class="btn btn-primary">
+			  <input type="submit" value="{$SUBMIT}" class="btn btn-primary">
 			</div>
 		  </form>
 		  

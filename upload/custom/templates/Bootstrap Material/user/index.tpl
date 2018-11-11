@@ -1,3 +1,4 @@
+{include file='header.tpl'}
 {include file='navbar.tpl'}
 
 <div class="container">
@@ -18,6 +19,12 @@
 			{/foreach}
 			{/nocache}
 		  </ul>
+		  {if isset($FORUM_GRAPH)}
+			<div id="chartWrapper">
+			  <h3 class="ui header" style="margin-left:20px;">{$FORUM_GRAPH}</h3>
+			  <canvas id="dataChart" width="100%" height="40"></canvas>
+			</div>
+		  {/if}
 		</div>
 	  </div>
 	</div>

@@ -1,9 +1,9 @@
+{include file='header.tpl'}
 {include file='navbar.tpl'}
 
 <div class="container">
 <div class="card">
   <div class="card-body">
-	<div class="container">
 	  <h3>{$CREATING_TOPIC_IN}</h3>
 	  
 	  {if isset($ERROR)}
@@ -43,7 +43,6 @@
 		<input type="submit" class="btn btn-primary" value="{$SUBMIT}">
 		<a href="#" class="btn btn-danger" data-toggle="modal" data-target="#cancelModal">{$CANCEL}</a>
 	  </form>
-	</div>
   </div>
 </div>
 </div>
@@ -55,7 +54,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-	    <h5 class="modal-title" id="cancelModalLabel">{$CANCEL}</h5>
+      <h4 class="modal-title" id="cancelModalLabel">{$CANCEL}</h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>

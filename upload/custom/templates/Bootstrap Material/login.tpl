@@ -1,3 +1,4 @@
+{include file='header.tpl'}
 {include file='navbar.tpl'}
 
 <div class="container">
@@ -25,10 +26,17 @@
 
                         <hr class="colorgraph">
 
-                        <div class="form-group">
-                            <input type="text" class="form-control form-control-lg" name="username" id="username"
-                                   autocomplete="off" value="{$USERNAME_INPUT}" placeholder="{$USERNAME}" tabindex="1">
-                        </div>
+                        {if isset($EMAIL)}
+                            <div class="form-group">
+                                <input type="email" class="form-control form-control-lg" name="email" id="email"
+                                       autocomplete="off" value="{$USERNAME_INPUT}" placeholder="{$EMAIL}" tabindex="1">
+                            </div>
+                        {else}
+                            <div class="form-group">
+                                <input type="text" class="form-control form-control-lg" name="username" id="username"
+                                       autocomplete="off" value="{$USERNAME_INPUT}" placeholder="{$USERNAME}" tabindex="1">
+                            </div>
+                        {/if}
 
                         <div class="form-group">
                             <input type="password" class="form-control form-control-lg" name="password" id="password"
@@ -58,7 +66,7 @@
                         <hr class="colorgraph">
                         <div class="row">
                             <div class="col-xs-12 col-md-6">
-                                <input type="submit" class="btn btn-primary btn-block btn-lg" value="{$SUBMIT}">
+                                <input type="submit" class="btn btn-primary btn-block btn-lg" value="{$SIGN_IN}">
                             </div>
                             <div class="col-xs-12 col-md-6">
                                 <a class="btn btn-success btn-block btn-lg" href="{$REGISTER_URL}">{$REGISTER}</a>

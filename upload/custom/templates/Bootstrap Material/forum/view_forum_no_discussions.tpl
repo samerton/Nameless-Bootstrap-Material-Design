@@ -1,14 +1,14 @@
+{include file='header.tpl'}
 {include file='navbar.tpl'}
 
 <div class="container">
 <div class="card">
   <div class="card-body">
-	<div class="container">
 	  <div class="row">
 		<div class="col-md-9">
 		  <ol class="breadcrumb">
 			{foreach from=$BREADCRUMBS item=breadcrumb}
-			<li{if isset($breadcrumb.active)} class="active"{/if}>{if !isset($breadcrumb.active)}<a href="{$breadcrumb.link}">{/if}{$breadcrumb.forum_title}{if !isset($breadcrumb.active)}</a>{/if}</li>
+			<li class="breadcrumb-item{if isset($breadcrumb.active)} active{/if}">{if !isset($breadcrumb.active)}<a href="{$breadcrumb.link}">{/if}{$breadcrumb.forum_title}{if !isset($breadcrumb.active)}</a>{/if}</li>
 			{/foreach}
 		  </ol>
 		  <h3 style="display: inline;">{$FORUM_TITLE}</h3>{if $NEW_TOPIC_BUTTON}<span class="pull-right"><a href="{$NEW_TOPIC_BUTTON}" class="btn btn-primary">{$NEW_TOPIC}</a></span>{/if}<br /><br />
@@ -25,7 +25,7 @@
 			  </tr>
 			  {foreach from=$SUBFORUMS item=subforum}
 			  <tr>
-			    <td><a href="{$subforum.link}">{$subforum.title}</a></td>
+			    <td>{$subforum.icon} <a href="{$subforum.link}">{$subforum.title}</a></td>
 				<td><strong>{$subforum.topics}</strong> {$TOPICS}</td>
 				<td>
 				  {if count($subforum.latest_post)}
@@ -38,7 +38,7 @@
 				    <div class="col-md-9">
 					  <a href="{$subforum.latest_post.link}">{$subforum.latest_post.title}</a>
 					  <br />
-					  <span data-toggle="tooltip" data-trigger="hover" data-original-title="{$subforum.latest_post.time}">{$subforum.latest_post.timeago}</span><br />{$BY} <a style="{$subforum.latest_post.last_user_style}" href="{$subforum.latest_post.last_user_link}">{$subforum.latest_post.last_user}</a>
+					  <span data-toggle="tooltip" data-trigger="hover" data-original-title="{$subforum.latest_post.time}">{$subforum.latest_post.timeago}</span><br />{$BY} <a style="{$subforum.latest_post.last_user_style}" href="{$subforum.latest_post.last_user_link}" data-poload="{$USER_INFO_URL}{$subforum.latest_post.last_user_id}" data-html="true" data-placement="top">{$subforum.latest_post.last_user}</a>
 				    </div>
 				  </div>
 				  {else}
@@ -73,12 +73,6 @@
 			  <h2>{$STATISTICS} <i class="fa fa-bar-chart"></i></h2>
 			  {$USERS_REGISTERED}<br />
 			  {$LATEST_MEMBER}
-			  
-			  <hr />
-			  
-			  <h3>{$ONLINE_USERS}</h3>
-			  {$ONLINE_USERS_LIST}
-			  
 			</div>
 		  </div>
 
@@ -86,12 +80,11 @@
 		    <br />
 		    {foreach from=$WIDGETS item=widget}
 		      {$widget}
-		      <br /><br />
+		      <br />
 		    {/foreach}
 		  {/if}
 		</div>
 	  </div>
-	</div>
   </div>
 </div>
 </div>

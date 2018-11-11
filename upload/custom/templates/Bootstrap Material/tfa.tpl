@@ -1,3 +1,4 @@
+{include file='header.tpl'}
 {include file='navbar.tpl'}
 
 <div class="container">
@@ -14,6 +15,7 @@
 		
 	    <p>{$TFA_ENTER_CODE}</p>
 	    <input type="text" class="form-control" name="tfa_code">
+	    <input type="hidden" name="tfa" value="true">
 	    <input type="hidden" name="token" value="{$TOKEN}">
 	    <br />
 	    <input type="submit" value="{$SUBMIT}" class="btn btn-primary">

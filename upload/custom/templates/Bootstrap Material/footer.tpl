@@ -40,10 +40,10 @@
 			  {if isset($item.items)}
 				{* Dropup *}
 				<li class="nav-item">
-				  <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">{$item.title}</a>
+				  <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">{$item.icon} {$item.title}</a>
 					<div class="dropdown-menu">
 					  {foreach from=$item.items item=dropdown}
-						<a class="dropdown-item" href="{$dropdown.link}" target="{$dropdown.target}">{$dropdown.title}</a>
+						<a class="dropdown-item" href="{$dropdown.link}" target="{$dropdown.target}">{$dropdown.icon} {$dropdown.title}</a>
 					  {/foreach}
 					</div>
 				  </a>
@@ -51,7 +51,7 @@
 			  {else}
 				{* Normal link *}
 				<li class="nav-item">
-				  <a class="nav-link{if isset($item.active)} active{/if}" href="{$item.link}" target="{$item.target}">{$item.title}</a></li>
+				  <a class="nav-link{if isset($item.active)} active{/if}" href="{$item.link}" target="{$item.target}">{$item.icon} {$item.title}</a></li>
 			  {/if}
 			{/foreach}
 			
@@ -62,6 +62,7 @@
 			  <div class="dropdown-menu" aria-labelledby="Preview">
 				<a class="dropdown-item" target="_blank" href="https://namelessmc.com/">Powered by NamelessMC</a>
 				<a class="dropdown-item" href="{$TERMS_LINK}">{$TERMS_TEXT}</a>
+				<a class="dropdown-item" href="{$PRIVACY_LINK}">{$PRIVACY_TEXT}</a>
 			  </div>
 			</li>
 		  </ul>
@@ -71,3 +72,32 @@
   </div>
 </footer>
 <br />
+
+{foreach from=$TEMPLATE_JS item=script}
+	{$script}
+{/foreach}
+
+{if isset($NEW_UPDATE)}
+	{if $NEW_UPDATE_URGENT ne true}
+		<script type="text/javascript">
+			$(document).ready(function(){
+			    $('#closeUpdate').click(function(event){
+			        event.preventDefault();
+
+			        let expiry = new Date();
+			        let length = 3600000;
+			        expiry.setTime(expiry.getTime() + length);
+
+			        $.cookie('update-alert-closed', 'true', { path: '/', expires: expiry });
+                });
+
+			    if($.cookie('update-alert-closed') === 'true'){
+			        $('#updateAlert').hide();
+                }
+            });
+		</script>
+	{/if}
+{/if}
+
+</body>
+</html>

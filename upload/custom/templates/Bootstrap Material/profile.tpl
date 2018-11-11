@@ -1,3 +1,4 @@
+{include file='header.tpl'}
 {include file='navbar.tpl'}
 
 <div class="container">
@@ -16,14 +17,14 @@
 		  {if isset($LOGGED_IN)}
 		    {if !isset($SELF)}
 		  <div class="btn-group">
-			<!--<a href="{$FOLLOW_LINK}" class="btn btn-outline-primary btn-lg btn-profile-primary"><i class="fa fa-users fa-fw"></i> {$FOLLOW}</a>-->
-			{if $MOD_OR_ADMIN ne true}<a href="#" data-toggle="modal" data-target="#blockModal" class="btn btn-outline-danger btn-lg btn-profile-danger"><i class="fa fa-ban fa-fw"></i></a>{/if}
-			<a href="{$MESSAGE_LINK}" class="btn btn-outline-secondary btn-lg btn-profile-secondary"><i class="fa fa-envelope fa-fw"></i></a>
+			<!--<a href="{$FOLLOW_LINK}" class="btn btn-primary btn-lg"><i class="fa fa-users fa-fw"></i> {$FOLLOW}</a>-->
+			{if $MOD_OR_ADMIN ne true}<a href="#" data-toggle="modal" data-target="#blockModal" class="btn btn-outline-danger btn-lg active"><i class="fa fa-ban fa-fw"></i></a>{/if}
+			<a href="{$MESSAGE_LINK}" class="btn btn-outline-secondary btn-lg active"><i class="fa fa-envelope fa-fw"></i></a>
 		  </div>
 		    {else}
 		  <div class="btn-group">
-		    <a href="{$SETTINGS_LINK}" class="btn btn-outline-secondary btn-lg btn-profile-secondary"><i class="fa fa-cogs fa-fw"></i></a>
-		    <button type="button" class="btn btn-outline-info btn-lg btn-profile-info" data-toggle="modal" data-target="#imageModal"><i class="fa fa-picture-o fa-fw" aria-hidden="true"></i></button>
+		    <a href="{$SETTINGS_LINK}" class="btn btn-outline-secondary btn-lg active"><i class="fa fa-cogs fa-fw"></i></a>
+		    <button type="button" class="btn btn-outline-info btn-lg active" data-toggle="modal" data-target="#imageModal"><i class="fa fa-picture-o fa-fw" aria-hidden="true"></i></button>
 		  </div>
 		    {/if}
 		  {/if}
@@ -32,7 +33,8 @@
 	  </div>
 	</div>
   </div>
-
+  
+{if $CAN_VIEW}
   {if !empty($WIDGETS)}
   <div class="row">
     <div class="col-md-8">
@@ -82,27 +84,21 @@
 		  {/if}
 
 		  {if count($WALL_POSTS)}
-		  <div class="timeline">
-			<div class="line text-muted"></div>
 			{foreach from=$WALL_POSTS item=post}
 
-			<article class="panel panel-default">
-			  <div class="panel-heading icon">
-				<img class="rounded-circle" style="height:40px; width=40px;" src="{$post.avatar}" />
-			  </div>
-
-			  <div class="panel-heading">
-				<h2 class="panel-title" style="display:inline;"><a href="{$post.profile}">{$post.nickname}:</a></h2>
+			<div class="card card-default">
+			  <div class="card-header">
+				<img class="rounded-circle" style="max-height:25px; max-width=25px;" src="{$post.avatar}" /> <a data-poload="{$USER_INFO_URL}{$post.user_id}" data-html="true" data-placement="top" href="{$post.profile}" style="{$post.user_style}">{$post.nickname}:</a>
 				<span class="pull-right"><span rel="tooltip" data-original-title="{$post.date}">{$post.date_rough}</span></span>
 			  </div>
 
-			  <div class="panel-body">
+			  <div class="card-body">
 				<div class="forum_post">
 				  {$post.content}
 				</div>
 			  </div>
 
-			  <div class="panel-footer">
+			  <div class="card-footer">
 				<a href="{if $post.reactions_link ne "#"}{$post.reactions_link}{else}#{/if}" class="pop" data-content='{if isset($post.reactions.reactions)} {foreach from=$post.reactions.reactions item=reaction name=reactions}<a href="{$reaction.profile}" style="{$reaction.style}"><img class="rounded" src="{$reaction.avatar}" alt="{$reaction.username}" style="max-height:30px; max-width:30px;" /> {$reaction.nickname}</a>{if !$smarty.foreach.reactions.last}<br />{/if}{/foreach} {else}{$post.reactions.count}{/if}'><i class="fa fa-thumbs-up"></i> {$post.reactions.count} </a> | <a href="#" data-toggle="modal" data-target="#replyModal{$post.id}"><i class="fa fa-comments"></i> {$post.replies.count}</a>
 				<span class="pull-right">
 				  {if (isset($CAN_MODERATE) && $CAN_MODERATE eq 1) || $post.self eq 1}
@@ -115,8 +111,7 @@
 				  {/if}
 				</span>
 			  </div>
-
-			</article>
+			</div>
 
 			{if (isset($CAN_MODERATE) && $CAN_MODERATE eq 1) || $post.self eq 1}
 				<!-- Post editing modal -->
@@ -223,8 +218,10 @@
 			  </div>
 			</div>
 
+			<br />
+
 			{/foreach}
-		  </div>
+		    <hr />
 
 			{$PAGINATION}
 		  {else}
@@ -240,7 +237,7 @@
 			    <div class="card-body">
 				  {if isset($ABOUT_FIELDS.minecraft)}
 				    <center>
-					  <img src="{$ABOUT_FIELDS.minecraft.image}" alt="{$USERNAME}" class="rounded" />
+					  <img src="{$ABOUT_FIELDS.minecraft.image}" alt="{$USERNAME}" onerror="this.style.display='none'" />
 					  <h2{if $USERNAME_COLOUR != false} style="{$USERNAME_COLOUR}"{/if}>{$NICKNAME}</h2>
 					  {$USER_TITLE}
 					</center>
@@ -248,6 +245,7 @@
 					<ul>
 					  <li>{$ABOUT_FIELDS.registered.title}</strong> <span rel="tooltip" title="{$ABOUT_FIELDS.registered.tooltip}">{$ABOUT_FIELDS.registered.value}</li>
 					  <li>{$ABOUT_FIELDS.last_seen.title}</strong> <span rel="tooltip" title="{$ABOUT_FIELDS.last_seen.tooltip}">{$ABOUT_FIELDS.last_seen.value}</li>
+					  <li>{$ABOUT_FIELDS.profile_views.title}</strong> {$ABOUT_FIELDS.profile_views.value}</li>
 					</ul>
 				  {else}
 				    <h2{if $USERNAME_COLOUR != false} style="{$USERNAME_COLOUR}"{/if}>{$NICKNAME}</h2>
@@ -259,14 +257,18 @@
 			
 			<div class="col-md-8">
 			  <div class="card">
-			    <div class="card-block">
-				  {foreach from=$ABOUT_FIELDS key=key item=field}
-					{if is_numeric($key)}
-					  <h3>{$field.title}</h3>
-					  <p>{$field.value}</p>
-					  <hr />
-					{/if}
-				  {/foreach}
+			    <div class="card-body">
+			      {if !isset($NO_ABOUT_FIELDS)}
+			        {foreach from=$ABOUT_FIELDS key=key item=field}
+			          {if is_numeric($key)}
+			            <h3>{$field.title}</h3>
+			            <p>{$field.value}</p>
+			            <hr />
+			          {/if}
+			        {/foreach}
+			      {else}
+			        <div class="alert alert-info">{$NO_ABOUT_FIELDS}</div>
+			      {/if}
 			    </div>
 			  </div>
 			</div>
@@ -291,6 +293,11 @@
   </div>
   </div>
   {/if}
+{else}
+	<div class="alert alert-danger" role="alert">
+        {$PRIVATE_PROFILE}
+	</div>
+{/if}
 </div>
 
 {if isset($LOGGED_IN)}
@@ -325,7 +332,7 @@
 	</div>
   {else}
 	{if $MOD_OR_ADMIN ne true}
-	<!-- Block user modal -->
+	<!-- user modal -->
 	<div class="modal fade" id="blockModal" tabindex="-1" role="dialog" aria-labelledby="blockModalLabel" aria-hidden="true">
 	  <div class="modal-dialog" role="document">
 		<div class="modal-content">
@@ -354,20 +361,3 @@
 {/if}
 
 {include file='footer.tpl'}
-
-{if isset($LOGGED_IN)}
-  <script type="text/javascript">
-    function deletePost(post) {
-	    if(confirm("{$CONFIRM_DELETE}")){
-	        document.getElementById("delete" + post).submit();
-        }
-    }
-  </script>
-  <script type="text/javascript">
-    function deleteReply(post) {
-    	if(confirm("{$CONFIRM_DELETE}")){
-    		document.getElementById("deleteReply" + post).submit();
-    	}
-    }
-  </script>
-{/if}

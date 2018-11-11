@@ -1,9 +1,9 @@
+{include file='header.tpl'}
 {include file='navbar.tpl'}
 
 <div class="container">
 <div class="card">
   <div class="card-body">
-	<div class="container">
 	  <h3>{$EDITING_POST}</h3>
 	  
 	  {if isset($ERRORS)}
@@ -48,8 +48,6 @@
 		<a class="btn btn-danger" href="{$CANCEL_LINK}" onclick="return confirm('{$CONFIRM_CANCEL}')">{$CANCEL}</a>
 	  </form>
 
-
-	</div>
   </div>
 </div>
 </div>

@@ -2,333 +2,580 @@
 /*
  *	Made by Samerton
  *  https://github.com/NamelessMC/Nameless/
- *  NamelessMC version 2.0.0-pr3
+ *  NamelessMC version 2.0.0-pr5
  *
  *  License: MIT
  *
  *  Bootstrap Material Design template
  */
 
-$template_version = 'v2.0.0-pr3'; // Version number of template
-$nl_template_version = '2.0.0-pr3'; // Nameless version template is designed for
+class Bootstrap_Material_Design_Template extends TemplateBase {
+	// Private variable to store language + user
+	private $_language, $_user, $_pages;
 
-if(!isset($admin_styles)){
-  // Paths to CSS files
-  $css = array(
-  	(defined('CONFIG_PATH') ? CONFIG_PATH : '') . '/custom/templates/Bootstrap Material/css/bootstrap-material-design.min.css',
-  	(defined('CONFIG_PATH') ? CONFIG_PATH : '') . '/core/assets/css/custom.css',
-  	(defined('CONFIG_PATH') ? CONFIG_PATH : '') . '/core/assets/css/font-awesome.min.css',
-  	(defined('CONFIG_PATH') ? CONFIG_PATH : '') . '/custom/templates/Bootstrap Material/css/custom.css'
-  );
+	// Constructor - set template name, version, Nameless version and author here
+	public function __construct($cache, $smarty, $language, $user, $pages){
+		$this->_language = $language;
+		$this->_user = $user;
+		$this->_pages = $pages;
 
-  $js_sources = array(
-  	(defined('CONFIG_PATH') ? CONFIG_PATH : '') . '/custom/templates/Bootstrap Material/js/jquery.min.js',
-  	(defined('CONFIG_PATH') ? CONFIG_PATH : '') . '/custom/templates/Bootstrap Material/js/popper.min.js',
-  	(defined('CONFIG_PATH') ? CONFIG_PATH : '') . '/custom/templates/Bootstrap Material/js/bootstrap-material-design.min.js'
-  );
+		parent::__construct(
+			'Bootstrap Material Design',
+			'2.0.0-pr5',
+			'2.0.0-pr5',
+			'<a href="https://samerton.me/" target="_blank">Samerton</a>'
+		);
 
-  if(defined('PAGE') && PAGE == 'cc_messaging'){
-  	$js_sources[] = (defined('CONFIG_PATH') ? CONFIG_PATH : '') . '/custom/templates/Bootstrap Material/js/bootstrap3-typeahead.min.js';
-  }
+		// Use Default Theme style + nav bg
+		$cache->setCache('default_template');
+		if($cache->isCached('nav_style')){
+			$nav_style = $cache->retrieve('nav_style');
+		} else {
+			$nav_style = 'light';
+			$cache->store('nav_style', 'light');
+		}
 
-  // Page load time
-  $page_load = microtime(true) - $start;
-  if(isset($page_loading) && $page_loading == '1'){
-  	$js = '
-  	<script type="text/javascript">
-  	var timer = \'' . str_replace('{x}', round($page_load, 3), $language->get('general', 'page_loaded_in')) . '\';
-  	$(\'#page_load_tooltip\').attr(\'title\', timer).tooltip();
-  	</script>';
-  } else $js = '';
+		if($cache->isCached('nav_bg')){
+			$nav_bg = $cache->retrieve('nav_bg');
+		} else {
+			$nav_bg = 'light';
+			$cache->store('nav_style', 'light');
+		}
 
-  // Popovers
-  $js.= '
-   <script>$(document).ready(function() { $(\'body\').bootstrapMaterialDesign(); });</script>
-   <script>
-   $(".pop").popover({ trigger: "manual" , html: true, animation:false, placement: "top" })
-  	.on("mouseenter", function () {
-  		var _this = this;
-  		$(this).popover("show");
-  		$(".popover").on("mouseleave", function () {
-  			$(_this).popover(\'hide\');
-  		});
-  	}).on("mouseleave", function () {
-  		var _this = this;
-  		setTimeout(function () {
-  			if (!$(".popover:hover").length) {
-  				$(_this).popover(\'hide\');
-  			}
-  		}, 300);
-   });
-   </script>
+		// Add any CSS files here
+		$this->addCSSFiles(array(
+			'https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css' => array('integrity' => 'sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX', 'crossorigin' => 'anonymous'),
+			(defined('CONFIG_PATH') ? CONFIG_PATH : '') . '/core/assets/css/custom.css' => array(),
+			(defined('CONFIG_PATH') ? CONFIG_PATH : '') . '/core/assets/css/font-awesome.min.css' => array(),
+			(defined('CONFIG_PATH') ? CONFIG_PATH : '') . '/core/assets/plugins/toastr/toastr.min.css' => array(),
+			(defined('CONFIG_PATH') ? CONFIG_PATH : '') . '/custom/templates/Bootstrap Material/css/custom.css' => array()
+		));
 
-    <script type="text/javascript">
-      $(function () {
-      $(\'[data-toggle="tooltip"]\').tooltip()
-      });
-      $(function () {
-      $(\'[rel="tooltip"]\').tooltip()
-      });
+		// Add any JS files here
+		$this->addJSFiles(array(
+			'https://code.jquery.com/jquery-3.3.1.min.js' => array('integrity' => 'sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=', 'crossorigin' => 'anonymous'),
+			'https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js' => array('integrity' => 'sha384-fA23ZRQ3G/J53mElWqVJEGJzU0sTs+SvzG8fXVWP+kJQ1lwFAOkcUOysnlKJC33U', 'crossorigin' => 'anonymous'),
+			'https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js' => array('integrity' => 'sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9', 'crossorigin' => 'anonymous'),
+			(defined('CONFIG_PATH') ? CONFIG_PATH : '') . '/core/assets/plugins/toastr/toastr.min.js' => array(),
+			(defined('CONFIG_PATH') ? CONFIG_PATH : '') . '/core/assets/js/jquery.cookie.js' => array()
+		));
 
-      $(\'[data-toggle="popover"]\').popover({ trigger: "manual" , html: true, animation:false}).on("mouseenter", function () {
-      var _this = this;
-      $(this).popover("show");
-      $(".popover").on("mouseleave", function () {
-        $(_this).popover(\'hide\');
-      });
-      }).on("mouseleave", function () {
-      var _this = this;
-      setTimeout(function () {
-        if (!$(".popover:hover").length) {
-          $(_this).popover("hide");
-        }
-      }, 300);
-      });
-    </script>
+		// Add any JS code here
+		$this->addJSScript(
+			'
+			   $(document).ready(function() { $(\'body\').bootstrapMaterialDesign(); });
+			   $(".pop").popover({ trigger: "manual" , html: true, animation:false, placement: "top" })
+			    .on("mouseenter", function () {
+			        var _this = this;
+			        $(this).popover("show");
+			        $(".popover").on("mouseleave", function () {
+			            $(_this).popover(\'hide\');
+			        });
+			    }).on("mouseleave", function () {
+			        var _this = this;
+			        setTimeout(function () {
+			            if (!$(".popover:hover").length) {
+			                $(_this).popover(\'hide\');
+			            }
+			        }, 300);
+			   });
+			   $(function () {
+			      $(\'[data-toggle="tooltip"]\').tooltip()
+			      });
+			      $(function () {
+			      $(\'[rel="tooltip"]\').tooltip()
+			      });
+			
+			      $(\'[data-toggle="popover"]\').popover({ trigger: "manual" , html: true, animation:false}).on("mouseenter", function () {
+			      var _this = this;
+			      $(this).popover("show");
+			      $(".popover").on("mouseleave", function () {
+			        $(_this).popover(\'hide\');
+			      });
+			      }).on("mouseleave", function () {
+			      var _this = this;
+			      setTimeout(function () {
+			        if (!$(".popover:hover").length) {
+			          $(_this).popover("hide");
+			        }
+			      }, 300);
+				});
+				
+				$(document).ready(function(){
+					var cachedUsers = {};
+					var timeoutId;
 
-    <script>
-    function copyToClipboard(element) {
-      var $temp = $("<input>")
-      $("body").append($temp);
-      $temp.val($(element).text()).select();
-      document.execCommand("copy");
-      $temp.remove();
+				   $(\'*[data-poload]\').mouseenter(function (){
+				   	var elem = this;
+				   	if(!timeoutId){
+				        timeoutId = window.setTimeout(function() {
+				            timeoutId = null;
+						    var data = cachedUsers[$(elem).data(\'poload\')];
+						    $(elem).popover({trigger:"manual",animation:false,content:data.html}).popover("show");
+						    $(\'.popover\').mouseleave(function (){
+						        if(!$(".popover:hover").length){
+						          $(this).popover("hide");
+						        }
+						    });
+				       }, 1000);
+				       
+				       // Get data now
+				       $.get($(elem).data(\'poload\'), function(d) {
+				            ' . ((defined('DEBUGGING') && DEBUGGING == 1) ? 'console.log(d);' : '') . '
+				            var data = JSON.parse(d);
+					        cachedUsers[$(elem).data(\'poload\')] = data;
+					        // Preload image
+					        var tmp = document.createElement(\'div\');
+					        tmp.innerHTML = data.html;
+					        var img = tmp.getElementsByTagName(\'img\')[0];
+					        var image = new Image();
+					        image.src = img.src;
+				       });
+				    }
+				   }).mouseleave(function (){
+					   var elem = this;
+					   if(timeoutId){
+					        window.clearTimeout(timeoutId);
+					        timeoutId = null;
+					   } else {
+					      setTimeout(function () {
+					        if(!$(".popover:hover").length){
+					          $(elem).popover("hide");
+					        }
+					      }, 200);
+					   }
+				   });
+				});
+				
+			    function copyToClipboard(element) {
+			      var $temp = $("<input>");
+			      $("body").append($temp);
+			      $temp.val($(element).text()).select();
+			      document.execCommand("copy");
+			      $temp.remove();
 
-      toastr.options.onclick = function () {};
-      toastr.options.progressBar = true;
-      toastr.options.closeButton = true;
-      toastr.options.positionClass = \'toast-bottom-left\'
-      toastr.success(\'Copied!\');
-    }
-    </script>';
+			      toastr.options.onclick = function () {};
+			      toastr.options.progressBar = true;
+			      toastr.options.closeButton = true;
+			      toastr.options.positionClass = \'toast-bottom-left\'
+			      toastr.success("' . $this->_language->get('general', 'copied') . '");
+			    }
+			'
+		);
 
-  if($user->isLoggedIn()){
-    $js .= '
-    <script type="text/javascript">
-    <!-- Alerts -->
-    $(document).ready(function() {
-      // Request permission for browser notifications
-      if(Notification){
-        if (Notification.permission !== "granted")
-        Notification.requestPermission();
-      }
+		// Check to see if the user is logged in, and if so, add any JS/CSS
+		if($this->_user->isLoggedIn()){
+			$this->addJSScript(
+				'
+				    <!-- Alerts -->
+				    $(document).ready(function() {
+				      // Request permission for browser notifications
+				      if(Notification){
+				        if (Notification.permission !== "granted")
+				        Notification.requestPermission();
+				      }
+				
+				      toastr.options.closeButton = true;
+				      toastr.options.positionClass = \'toast-bottom-left\';
+				
+				      // Get alerts and messages, and then set them to refresh every 20 seconds
+				      $.getJSON(\'' . URL::build('/queries/pms') . '\', function(data) {
+				        var pm_dropdown = document.getElementById(\'pm_dropdown\');
+				
+				        if(data.value > 0){
+				          $("#pms").html(\' <i class="fa fa-exclamation-circle custom-nav-exclaim"></i>\');
+				
+				          if(pm_dropdown.innerHTML == \'' . $this->_language->get('general', 'loading') . '\'){
+				
+				            var new_pm_dropdown = \'\';
+				
+				            for(i in data.pms){
+				              new_pm_dropdown += \'<a class="dropdown-item" href="' . URL::build('/user/messaging/', 'action=view&amp;message=') . '\' + data.pms[i].id + \'">\' + data.pms[i].title + \'</a>\';
+				            }
+				
+				            pm_dropdown.innerHTML = new_pm_dropdown;
+				          }
+				
+				        } else {
+				          pm_dropdown.innerHTML = \'<a class="dropdown-item">' . $this->_language->get('user', 'no_messages') . '</a>\';
+				        }
+				      });
+				      $.getJSON(\'' . URL::build('/queries/alerts'). '\', function(data) {
+				        var alert_dropdown = document.getElementById(\'alert_dropdown\');
+				
+				        if(data.value > 0){
+				          $("#alerts").html(\' <i class="fa fa-exclamation-circle custom-nav-exclaim"></i>\');
+				
+				          if(alert_dropdown.innerHTML == \'' . $this->_language->get('general', 'loading') . '\'){
+				
+				            var new_alert_dropdown = \'\';
+				
+				            for(i in data.alerts){
+				              new_alert_dropdown += \'<a class="dropdown-item" href="' . URL::build('/user/alerts/', 'view=') . '\' + data.alerts[i].id + \'">\' + data.alerts[i].content_short + \'</a>\';
+				            }
+				
+				            alert_dropdown.innerHTML = new_alert_dropdown;
+				          }
+				
+				        } else {
+				          alert_dropdown.innerHTML = \'<a class="dropdown-item">' . $this->_language->get('user', 'no_alerts') . '</a>\';
+				        }
+				      });
+				
+				      window.setInterval(function(){
+				        $.getJSON(\'' . URL::build('/queries/pms') . '\', function(data) {
+				        if(data.value > 0 && $(\'#pms\').is(\':empty\')){
+				          $("#pms").html(\' <i class="fa fa-exclamation-circle custom-nav-exclaim"></i>\');
+				          toastr.options.onclick = function () {
+				            window.location.href = "' . URL::build('/user/messaging') . '";
+				          };
+				
+				          if(data.value == 1){
+				            toastr.info(\'' . $this->_language->get('user', '1_new_message') . '\');
+				          } else {
+				            var x_messages = \'' . $this->_language->get('user', 'x_new_messages') . '\';
+				            toastr.info(x_messages.replace("{x}", data.value));
+				          }
+				
+				          // Update navbar dropdown
+				          var pm_dropdown = document.getElementById(\'pm_dropdown\');
+				
+				          $("#pms").html(\' <i class="fa fa-exclamation-circle custom-nav-exclaim"></i>\');
+				
+				          var new_pm_dropdown = \'\';
+				
+				          for(i in data.pms){
+				            new_pm_dropdown += \'<a class="dropdown-item" href="' . URL::build('/user/messaging/', 'action=view&amp;message=') . '\' + data.pms[i].id + \'">\' + data.pms[i].title + \'</a>\';
+				          }
+				
+				          pm_dropdown.innerHTML = new_pm_dropdown;
+				
+				          // Desktop notification
+				          if (Notification.permission !== "granted")
+				            Notification.requestPermission();
+				          else {
+				            if(data.value == 1){
+				              var notification = new Notification(\'' . SITE_NAME . '\', {
+				                body: \'' . $this->_language->get('user', '1_new_message') . '\',
+				              });
+				            } else {
+				              var notification = new Notification(\'' . SITE_NAME . '\', {
+				                body: x_messages.replace("{x}", data.value),
+				              });
+				            }
+				
+				            notification.onclick = function () {
+				              window.open("' . Output::getClean(rtrim(Util::getSelfURL(), '/')) . URL::build('/user/messaging') . '");
+				            };
+				
+				          }
+				        }
+				        });
+				        $.getJSON(\'' . URL::build('/queries/alerts') . '\', function(data) {
+				        if(data.value > 0 && $(\'#alerts\').is(\':empty\')){
+				          $("#alerts").html(\' <i class="fa fa-exclamation-circle custom-nav-exclaim"></i>\');
+				          toastr.options.onclick = function () {
+				            window.location.href = "' . URL::build('/user/alerts') . '";
+				          };
+				
+				          if(data.value == 1){
+				            toastr.info(\'' . $this->_language->get('user', '1_new_alert') . '\');
+				          } else {
+				            var x_alerts = \'' . $this->_language->get('user', 'x_new_alerts') . '\';
+				            toastr.info(x_alerts.replace("{x}", data.value));
+				          }
+				
+				          // Update navbar dropdown
+				          var alert_dropdown = document.getElementById(\'alert_dropdown\');
+				
+				          $("#alerts").html(\' <i class="fa fa-exclamation-circle custom-nav-exclaim"></i>\');
+				
+				          var new_alert_dropdown = \'\';
+				
+				          for(i in data.alerts){
+				            new_alert_dropdown += \'<a class="dropdown-item" href="' . URL::build('/user/alerts/', 'view=') . '\' + data.alerts[i].id + \'">\' + data.alerts[i].content_short + \'</a>\';
+				          }
+				
+				          alert_dropdown.innerHTML = new_alert_dropdown;
+				
+				          // Desktop notification
+				          if (Notification.permission !== "granted")
+				            Notification.requestPermission();
+				          else {
+				            if(data.value == 1){
+				              var notification = new Notification(\'' . SITE_NAME . '\', {
+				                body: \'' . $this->_language->get('user', '1_new_alert') . '\',
+				              });
+				            } else {
+				              var notification = new Notification(\'' . SITE_NAME . '\', {
+				                body: x_alerts.replace("{x}", data.value),
+				              });
+				            }
+				
+				            notification.onclick = function () {
+				              window.open("' . Output::getClean(rtrim(Util::getSelfURL(), '/')) . URL::build('/user/alerts') . '");
+				            };
+				
+				          }
+				        }
+				        });
+				      }, 20000);
+				    });
+				
+				      $(\'.alert-dropdown, .pm-dropdown\').hover(
+				          function() {
+				              $(this).find(\'.dropdown-menu\').stop(true, true).delay(25).fadeIn();
+				          },
+				          function() {
+				              $(this).find(\'.dropdown-menu\').stop(true, true).delay(25).fadeOut();
+				          }
+				      );
+				
+				      $(\'.alert-dropdown-menu, .pm-dropdown-menu\').hover(
+				          function() {
+				              $(this).stop(true, true);
+				          },
+				          function() {
+				              $(this).stop(true, true).delay(25).fadeOut();
+				          }
+				      );
+				      
+				      // Warnings
+				      if($(\'div.show-punishment\').length){
+				        $(\'.show-punishment\').modal(\'show\');
+				      }
+				'
+			);
+		} else {
+			// User is not logged in - display cookie notice
+			if(defined('COOKIE_NOTICE')){
+				$this->addJSScript(
+					'
+					toastr.options.timeOut = 0;
+		            toastr.options.extendedTimeOut = 0;
+		            toastr.options.closeButton = true;
 
-      toastr.options.closeButton = true;
-      toastr.options.positionClass = \'toast-bottom-left\';
+		            toastr.options.onclick = function() { $(\'.toast .toast-close-button\').focus(); }
+		            toastr.options.onHidden = function() { $.cookie(\'accept\', \'accepted\', { path: \'/\' }); }
 
-      // Get alerts and messages, and then set them to refresh every 20 seconds
-      $.getJSON(\'' . URL::build('/queries/pms') . '\', function(data) {
-        var pm_dropdown = document.getElementById(\'pm_dropdown\');
+		            toastr.options.positionClass = \'toast-bottom-left\';
 
-        if(data.value > 0){
-          $("#pms").html(\' <i class="fa fa-exclamation-circle custom-nav-exclaim"></i>\');
+		            toastr.info(\'' . $this->_language->get('general', 'cookie_notice') . '\');
+					'
+				);
+			}
+		}
 
-          if(pm_dropdown.innerHTML == \'' . $language->get('general', 'loading') . '\'){
+		// Editor skin (moono-lisa or moono-dark)
+		define('TEMPLATE_EDITOR_STYLE', 'moono-lisa');
 
-            var new_pm_dropdown = \'\';
+		// Assign any Smarty variables
+		$smarty->assign('NAV_STYLE', Output::getClean($nav_style));
+		$smarty->assign('NAV_BG', Output::getClean($nav_bg));
+	}
 
-            for(i in data.pms){
-              new_pm_dropdown += \'<a class="dropdown-item" href="' . URL::build('/user/messaging/', 'action=view&amp;message=') . '\' + data.pms[i].id + \'">\' + data.pms[i].title + \'</a>\';
-            }
+	// Add any CSS/JS as the page is about to be loaded - here we can get the page name that we are on
+	public function onPageLoad(){
+		if(defined('PAGE_LOADING') && PAGE_LOADING == 1){
+			$this->addJSScript(
+				'
+				  	var timer = \'' . PAGE_LOAD_TIME . '\';
+  	                $(\'#page_load_tooltip\').attr(\'title\', timer).tooltip();
+				'
+			);
+		}
 
-            pm_dropdown.innerHTML = new_pm_dropdown;
-          }
+		if(defined('PAGE')){
+			if(PAGE == 'cc_messaging'){ // cc_messaging = UserCP -> Messaging
+				$this->addCSSFiles(array(
+					(defined('CONFIG_PATH') ? CONFIG_PATH : '') . '/custom/templates/Default/css/bootstrap-tokenfield.min.css' => array(),
+					(defined('CONFIG_PATH') ? CONFIG_PATH : '') . '/core/assets/css/jquery-ui.min.css' => array()
+				));
 
-        } else {
-          pm_dropdown.innerHTML = \'<a class="dropdown-item">' . $language->get('user', 'no_messages') . '</a>\';
-        }
-      });
-      $.getJSON(\'' . URL::build('/queries/alerts'). '\', function(data) {
-        var alert_dropdown = document.getElementById(\'alert_dropdown\');
+				$this->addJSFiles(array(
+					(defined('CONFIG_PATH') ? CONFIG_PATH : '') . '/custom/templates/Default/js/bootstrap-tokenfield.min.js' => array(),
+					(defined('CONFIG_PATH') ? CONFIG_PATH : '') . '/core/assets/js/jquery-ui.min.js' => array()
+				));
 
-        if(data.value > 0){
-          $("#alerts").html(\' <i class="fa fa-exclamation-circle custom-nav-exclaim"></i>\');
+				$this->addJSScript(
+					'
+					 	$(\'#InputTo\').tokenfield({
+					      autocomplete: {
+					        source: allUsers,
+					        delay: 100
+					      },
+					      showAutocompleteOnFocus: true
+					    });
+					'
+				);
+			} else if(PAGE == 'login' || PAGE == 'register' || PAGE == 'complete_signup'){ // checkbox for login/register/complete_signup pages
+				$this->addJSScript(
+					'
+					  	$(function () {
+					        $(\'.button-checkbox\').each(function () {
+					            // Settings
+					            var $widget = $(this),
+					                $button = $widget.find(\'button\'),
+					                $checkbox = $widget.find(\'input:checkbox\'),
+					                color = $button.data(\'color\'),
+					                settings = {
+					                    on: {
+					                        icon: \'fa fa-check-square-o\'
+					                    },
+					                    off: {
+					                        icon: \'fa fa-square-o\'
+					                    }
+					                };
+					            // Event Handlers
+					            $button.on(\'click\', function () {
+					                $checkbox.prop(\'checked\', !$checkbox.is(\':checked\'));
+					                $checkbox.triggerHandler(\'change\');
+					                updateDisplay();
+					            });
+					            $checkbox.on(\'change\', function () {
+					                updateDisplay();
+					            });
+					            // Actions
+					            function updateDisplay() {
+					                var isChecked = $checkbox.is(\':checked\');
+					                // Set the button\'s state
+					                $button.data(\'state\', (isChecked) ? "on" : "off");
+					                // Set the button\'s icon
+					                $button.find(\'.state-icon\')
+					                    .removeClass()
+					                    .addClass(\'state-icon \' + settings[$button.data(\'state\')].icon);
+					                // Update the button\'s colour
+					                if (isChecked) {
+					                    $button
+					                        .removeClass(\'btn-default\')
+					                        .addClass(\'btn-\' + color + \' active\');
+					                }
+					                else {
+					                    $button
+					                        .removeClass(\'btn-\' + color + \' active\')
+					                        .addClass(\'btn-default\');
+					                }
+					            }
+					            // Initialisation
+					            function init() {
+					                updateDisplay();
+					                // Inject the icon if applicable
+					                if ($button.find(\'.state-icon\').length == 0) {
+					                    $button.prepend(\'<i class="state-icon \' + settings[$button.data(\'state\')].icon + \'"></i>\');
+					                }
+					            }
+					            init();
+					        });
+					    });
+					'
+				);
+			} else if(PAGE == 'status'){ // Server status page
+				$this->addJSScript(
+					'
+					  	$(document).ready(function(){
+					        $(".server").each(function(){
+					            let serverId = $(this).data("id");
+					            let serverBungee = $(this).data("bungee");
+					            let serverPlayerList = $(this).data("players");
+					            $.getJSON("' . URL::build('/queries/server/', 'id=') . '" + serverId, function(data){
+									var html = "";
+									if(data.status_value == 1){
+										$("#server" + serverId).addClass("bg-success text-white");
+										html = "<p>" + data.player_count + "/" + data.player_count_max + "</p>";
+										if(serverBungee == 1){
+									        html += "<p>' . $this->_language->get('general', 'bungee_instance') . '</p>";
+										} else {
+										    if(serverPlayerList == 1){
+										        if(data.player_list.length > 0){
+										            html += "<p>";
+										            let avatarSource = "' . Util::getAvatarSource() . '";
+										            for(var i = 0; i < data.player_list.length; i++){
+										                html += "<a href=\"' . URL::build('/profile/') . '" + data.player_list[i].name + "\"><img style=\"margin-bottom:3px;max-width:32px;max-height:32px;\" data-toggle=\"tooltip\" title=\"" + data.player_list[i].name + "\" src=\"" + avatarSource.replace("{x}", data.player_list[i].id).replace("{y}", 64) + "\" class=\"rounded\" alt=\"" + data.player_list[i].name + "\"></a> ";
+										            }
+										            html += "</p>";
+										            
+										            if(data.player_list.length < data.player_count){
+										                let andXMore = "' . $this->_language->get('general', 'and_x_more') . '";
+										                html += "<p><span class=\"badge badge-secondary\">" + andXMore.replace("{x}", (data.player_count - data.player_list.length)) + "</span></p>";
+										            }
+										        } else {
+										            html += "<p>' . $this->_language->get('general', 'no_players_online') . '</p>";
+										        }
+										    }
+										}
+									} else {
+										$("#server" + serverId).addClass("bg-danger text-white");
+										html = "<p>0/0</p><p>' . $this->_language->get('general', 'offline') . '</p>";
+									}
+									
+									$("#content" + serverId).html(html);
+									$(\'[data-toggle="tooltip"]\').tooltip();
+								});
+					        });
+					    });
+					'
+				);
+			} else if(PAGE == 'profile'){
+				$this->addJSScript('
+				  $(\'#imageModal\').on(\'show.bs.modal\', function (e) {
+					$("select").imagepicker();
+				  });
+				');
 
-          if(alert_dropdown.innerHTML == \'' . $language->get('general', 'loading') . '\'){
+				if($this->_user->isLoggedIn()){
+					$this->addJSScript('
+					    function deletePost(post) {
+				            if(confirm("' . $this->_language->get('user', 'confirm_delete') . '")){
+				                document.getElementById("delete" + post).submit();
+				            }
+				        }
+				        function deleteReply(post) {
+				            if(confirm("' . $this->_language->get('user', 'confirm_delete') . '")){
+				                document.getElementById("deleteReply" + post).submit();
+				            }
+				        }
+					');
+				}
+			}
+		}
 
-            var new_alert_dropdown = \'\';
+		// View topic highlight
+		if(isset($_GET['route']))
+			$route = rtrim($_GET['route'], '/');
+		else
+			$route = '/';
 
-            for(i in data.alerts){
-              new_alert_dropdown += \'<a class="dropdown-item" href="' . URL::build('/user/alerts/', 'view=') . '\' + data.alerts[i].id + \'">\' + data.alerts[i].content_short + \'</a>\';
-            }
+		if(strpos($route, '/forum/topic/') !== false){
+			$this->addJSFiles(array(
+				(defined('CONFIG_PATH') ? CONFIG_PATH : '') . '/core/assets/js/jquery-ui.min.js' => array()
+			));
 
-            alert_dropdown.innerHTML = new_alert_dropdown;
-          }
+			$this->addJSScript(
+				'
+				  $(document).ready(function(){
+					var hash = window.location.hash.substring(1);
+					$("#" + hash).effect("highlight", {}, 2000);
+					(function() {
+					    if (document.location.hash) {
+					        setTimeout(function() {
+					            window.scrollTo(window.scrollX, window.scrollY - 110);
+					        }, 10);
+					    }
+					})();
+			      });
+				'
+			);
+		}
 
-        } else {
-          alert_dropdown.innerHTML = \'<a class="dropdown-item">' . $language->get('user', 'no_alerts') . '</a>\';
-        }
-      });
-
-      $.getJSON(\'' . URL::build('/queries/servers'). '\', function(data) {});
-
-      window.setInterval(function(){
-        $.getJSON(\'' . URL::build('/queries/pms') . '\', function(data) {
-        if(data.value > 0 && $(\'#pms\').is(\':empty\')){
-          $("#pms").html(\' <i class="fa fa-exclamation-circle custom-nav-exclaim"></i>\');
-          toastr.options.onclick = function () {
-            window.location.href = "' . URL::build('/user/messaging') . '";
-          };
-
-          var x_messages = \'' . $language->get('user', 'x_new_messages') . '\';
-          toastr.info(x_messages.replace("{x}", data.value));
-
-          // Update navbar dropdown
-          var pm_dropdown = document.getElementById(\'pm_dropdown\');
-
-          $("#pms").html(\' <i class="fa fa-exclamation-circle custom-nav-exclaim"></i>\');
-
-          var new_pm_dropdown = \'\';
-
-          for(i in data.pms){
-            new_pm_dropdown += \'<a class="dropdown-item" href="' . URL::build('/user/messaging/', 'action=view&amp;message=') . '\' + data.pms[i].id + \'">\' + data.pms[i].title + \'</a>\';
-          }
-
-          pm_dropdown.innerHTML = new_pm_dropdown;
-
-          // Desktop notification
-          if (Notification.permission !== "granted")
-            Notification.requestPermission();
-          else {
-            var notification = new Notification(\'' . SITE_NAME . '\', {
-              body: x_messages.replace("{x}", data.value),
-            });
-
-            notification.onclick = function () {
-              window.open("' . Output::getClean(Util::getSelfURL()) . URL::build('user/messaging') . '");
-            };
-
-          }
-        }
-        });
-        $.getJSON(\'' . URL::build('/queries/alerts') . '\', function(data) {
-        if(data.value > 0 && $(\'#alerts\').is(\':empty\')){
-          $("#alerts").html(\' <i class="fa fa-exclamation-circle custom-nav-exclaim"></i>\');
-          toastr.options.onclick = function () {
-            window.location.href = "' . URL::build('/user/alerts') . '";
-          };
-
-          var x_alerts = \'' . $language->get('user', 'x_new_alerts') . '\';
-          toastr.info(x_alerts.replace("{x}", data.value));
-
-          // Update navbar dropdown
-          var alert_dropdown = document.getElementById(\'alert_dropdown\');
-
-          $("#alerts").html(\' <i class="fa fa-exclamation-circle custom-nav-exclaim"></i>\');
-
-          var new_alert_dropdown = \'\';
-
-          for(i in data.alerts){
-            new_alert_dropdown += \'<a class="dropdown-item" href="' . URL::build('/user/alerts/', 'view=') . '\' + data.alerts[i].id + \'">\' + data.alerts[i].content_short + \'</a>\';
-          }
-
-          alert_dropdown.innerHTML = new_alert_dropdown;
-
-          // Desktop notification
-          if (Notification.permission !== "granted")
-            Notification.requestPermission();
-          else {
-            var notification = new Notification(\'' . SITE_NAME . '\', {
-              body: x_alerts.replace("{x}", data.value),
-            });
-
-            notification.onclick = function () {
-              window.open("' . Output::getClean(Util::getSelfURL()) . URL::build('user/alerts') . '");
-            };
-
-          }
-        }
-        });
-      }, 20000);
-    });
-
-      $(\'.alert-dropdown, .pm-dropdown\').hover(
-          function() {
-              $(this).find(\'.dropdown-menu\').stop(true, true).delay(25).fadeIn();
-          },
-          function() {
-              $(this).find(\'.dropdown-menu\').stop(true, true).delay(25).fadeOut();
-          }
-      );
-
-      $(\'.alert-dropdown-menu, .pm-dropdown-menu\').hover(
-          function() {
-              $(this).stop(true, true);
-          },
-          function() {
-              $(this).stop(true, true).delay(25).fadeOut();
-          }
-      );
-      
-      // Warnings
-      if($(\'div.show-punishment\').length){
-        $(\'.show-punishment\').modal(\'show\');
-      }
-
-    </script>';
-  }
-
-  // Registration page/login page checkbox
-  if(isset($page) && ($page == 'login' || $page == 'register' || $page == 'complete_signup')){
-  	$js .= '
-  	<script>
-  	$(function () {
-  		$(\'.button-checkbox\').each(function () {
-  			// Settings
-  			var $widget = $(this),
-  				$button = $widget.find(\'button\'),
-  				$checkbox = $widget.find(\'input:checkbox\'),
-  				color = $button.data(\'color\'),
-  				settings = {
-  					on: {
-  						icon: \'fa fa-check-square-o\'
-  					},
-  					off: {
-  						icon: \'fa fa-square-o\'
-  					}
-  				};
-  			// Event Handlers
-  			$button.on(\'click\', function () {
-  				$checkbox.prop(\'checked\', !$checkbox.is(\':checked\'));
-  				$checkbox.triggerHandler(\'change\');
-  				updateDisplay();
-  			});
-  			$checkbox.on(\'change\', function () {
-  				updateDisplay();
-  			});
-  			// Actions
-  			function updateDisplay() {
-  				var isChecked = $checkbox.is(\':checked\');
-  				// Set the button\'s state
-  				$button.data(\'state\', (isChecked) ? "on" : "off");
-  				// Set the button\'s icon
-  				$button.find(\'.state-icon\')
-  					.removeClass()
-  					.addClass(\'state-icon \' + settings[$button.data(\'state\')].icon);
-  				// Update the button\'s colour
-  				if (isChecked) {
-  					$button
-  						.removeClass(\'btn-default\')
-  						.addClass(\'btn-\' + color + \' active\');
-  				}
-  				else {
-  					$button
-  						.removeClass(\'btn-\' + color + \' active\')
-  						.addClass(\'btn-default\');
-  				}
-  			}
-  			// Initialisation
-  			function init() {
-  				updateDisplay();
-  				// Inject the icon if applicable
-  				if ($button.find(\'.state-icon\').length == 0) {
-  					$button.prepend(\'<i class="state-icon \' + settings[$button.data(\'state\')].icon + \'"></i>\');
-  				}
-  			}
-  			init();
-  		});
-  	});
-  	</script>
-  	';
-  }
+		// Any AJAX scripts to load?
+		if(count($this->_pages->getAjaxScripts())){
+			$js = '';
+			foreach($this->_pages->getAjaxScripts() as $ajax_script){
+				$js .= '$.getJSON(\'' . $ajax_script . '\', function(data) {});';
+			}
+			$this->addJSScript($js);
+		}
+	}
 }
+
+$template = new Bootstrap_Material_Design_Template($cache, $smarty, $language, $user, $pages);
