@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg fixed-top navbar-{$NAV_STYLE} bg-{$NAV_BG}">
+<nav class="navbar navbar-expand-lg fixed-top navbar-{$NAV_STYLE} bg-{$NAV_BG}" style="z-index: 999;">
   <div class="container">
    <a class="navbar-brand" href="{$SITE_HOME}">{$SITE_NAME}</a>
     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
