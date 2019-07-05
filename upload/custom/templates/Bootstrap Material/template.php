@@ -2,7 +2,7 @@
 /*
  *	Made by Samerton
  *  https://github.com/NamelessMC/Nameless/
- *  NamelessMC version 2.0.0-pr5
+ *  NamelessMC version 2.0.0-pr6
  *
  *  License: MIT
  *
@@ -21,8 +21,8 @@ class Bootstrap_Material_Design_Template extends TemplateBase {
 
 		parent::__construct(
 			'Bootstrap Material Design',
-			'2.0.0-pr5',
-			'2.0.0-pr5',
+			'2.0.0-pr6',
+			'2.0.0-pr6',
 			'<a href="https://samerton.me/" target="_blank">Samerton</a>'
 		);
 
@@ -46,7 +46,7 @@ class Bootstrap_Material_Design_Template extends TemplateBase {
 		$this->addCSSFiles(array(
 			'https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css' => array('integrity' => 'sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX', 'crossorigin' => 'anonymous'),
 			(defined('CONFIG_PATH') ? CONFIG_PATH : '') . '/core/assets/css/custom.css' => array(),
-			(defined('CONFIG_PATH') ? CONFIG_PATH : '') . '/core/assets/css/font-awesome.min.css' => array(),
+			'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.css' => array('integrity' => 'sha256-PF6MatZtiJ8/c9O9HQ8uSUXr++R9KBYu4gbNG5511WE=', 'crossorigin' => 'anonymous'),
 			(defined('CONFIG_PATH') ? CONFIG_PATH : '') . '/core/assets/plugins/toastr/toastr.min.css' => array(),
 			(defined('CONFIG_PATH') ? CONFIG_PATH : '') . '/custom/templates/Bootstrap Material/css/custom.css' => array()
 		));

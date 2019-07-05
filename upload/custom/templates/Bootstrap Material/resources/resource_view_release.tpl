@@ -24,7 +24,7 @@
 
 	  <span data-toggle="tooltip" data-trigger="hover" data-original-title="{$DATE_FULL}">{$DATE}</span>
 
-	  <span class="pull-right">
+	  <span class="float-md-right">
 	    <a href="{$DOWNLOAD_URL}" class="btn btn-primary">{$DOWNLOAD}</a>
       </span>
 

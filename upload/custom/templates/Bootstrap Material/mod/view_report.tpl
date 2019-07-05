@@ -9,7 +9,7 @@
 	  <div class="card">
 		<div class="card-body">
 		  <h2 class="card-title" style="display:inline;">{$REPORTS}</h2>
-		  <span class="pull-right">
+		  <span class="float-md-right">
 		    <a href="{$REPORTS_LINK}" class="btn btn-info">{$BACK}</a>
 		  </span>
 		  
@@ -26,7 +26,7 @@
 		  <div class="card">
 		    <div class="card-header">
 			  <a href="{$REPORTER_USER_PROFILE}" target="_blank">{$REPORTER_USER}</a>:
-			  <span class="pull-right" data-toggle="tooltip" data-original-title="{$REPORT_DATE}">{$REPORT_DATE_FRIENDLY}</span>
+			  <span class="float-md-right" data-toggle="tooltip" data-original-title="{$REPORT_DATE}">{$REPORT_DATE_FRIENDLY}</span>
 			</div>
 		    <div class="card-body">
 			  {$REPORT_CONTENT}
@@ -41,7 +41,7 @@
 			  <div class="card">
 			    <div class="card-header">
 			      <a href="{$comment.profile}" target="_blank">{$comment.username}</a>:
-			      <span class="pull-right" data-toggle="tooltip" data-original-title="{$comment.date}">{$comment.date_friendly}</span>
+			      <span class="float-md-right" data-toggle="tooltip" data-original-title="{$comment.date}">{$comment.date_friendly}</span>
 				</div>
 				<div class="card-body">
 				  {$comment.content}
@@ -62,7 +62,7 @@
 			<div class="form-group">
 			  <input type="hidden" name="token" value="{$TOKEN}">
 			  <input type="submit" value="{$SUBMIT}" class="btn btn-primary">
-			  <span class="pull-right">
+			  <span class="float-md-right">
 			    {if isset($CLOSE_REPORT)}
 				  <a href="{$CLOSE_LINK}" class="btn btn-danger">{$CLOSE_REPORT}</a>
 				{else}

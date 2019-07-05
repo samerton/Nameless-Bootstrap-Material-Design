@@ -24,11 +24,17 @@
     <meta property="og:title" content="{$TITLE} &bull; {$smarty.const.SITE_NAME}" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="{$OG_URL}" />
-    <meta property="og:image" content="{$CONFIG_PATH}core/assets/img/site_image.png'; ?>" />
+    <meta property="og:image" content="{$OG_IMAGE}" />
 
     {if isset($PAGE_DESCRIPTION) && $PAGE_DESCRIPTION|count_characters > 0}
         <meta property="og:description" content="{$PAGE_DESCRIPTION}" />
+        <meta name="twitter:description" content="{$PAGE_DESCRIPTION}" />
     {/if}
+
+    <!-- Twitter Card Properties -->
+    <meta name="twitter:title" content="{$TITLE} &bull; {$smarty.const.SITE_NAME}" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:image" content="{$OG_IMAGE}" />
 
     {foreach from=$TEMPLATE_CSS item=css}
         {$css}

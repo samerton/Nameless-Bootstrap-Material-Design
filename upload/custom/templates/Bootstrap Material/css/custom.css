@@ -437,3 +437,13 @@
 .well {
 	background-color: #ecf0f1;
 }
+
+@media only screen and (max-width: 768px) {
+	.dataTables_wrapper .form-control select {
+		background-color: lightblue;
+	}
+}
+
+[class*="float-right"] {
+	float: right;
+}

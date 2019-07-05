@@ -9,7 +9,7 @@
             <div class="card">
                 <div class="card-body">
                     <h2 class="card-title" style="display:inline;">{$PUNISHMENTS}</h2>
-                    <span class="pull-right">
+                    <span class="float-md-right">
                         <a href="{$BACK_LINK}" class="btn btn-info">{$BACK}</a>
                     </span>
                     <hr />
@@ -57,7 +57,7 @@
                                         <span class="badge badge-success">{$ACKNOWLEDGED}</span>
                                     {/if}
                                     <a href="{$punishment.issued_by_profile}" style="{$punishment.issued_by_style}">{$punishment.issued_by_nickname}</a>
-                                    <span class="pull-right"><span data-toggle="tooltip" data-original-title="{$punishment.date_full}">{$punishment.date_friendly}</span></span>
+                                    <span class="float-md-right"><span data-toggle="tooltip" data-original-title="{$punishment.date_full}">{$punishment.date_friendly}</span></span>
                                 </div>
                                 <div class="card-block">
                                     {$punishment.reason}

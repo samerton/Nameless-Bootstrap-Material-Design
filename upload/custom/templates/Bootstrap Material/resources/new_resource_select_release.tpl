@@ -6,7 +6,7 @@
 	<div class="card-body">
 	  <h2 class="card-title" style="display:inline;">{$NEW_RESOURCE}</h2>
 	  
-	  <span class="pull-right">
+	  <span class="float-md-right">
 		<a href="{$CANCEL_LINK}" class="btn btn-danger" onclick="return confirm('{$CONFIRM_CANCEL}');">{$CANCEL}</a>
 	  </span>
 	  <br /><br />

@@ -33,7 +33,7 @@
 			  <button type="button" disabled class="btn btn-primary">{$PAYMENT_PENDING}</button>
 		  {/if}
 
-		  <span class="pull-right">
+		  <span class="float-md-right">
 			{if isset($CAN_EDIT)}<a href="{$EDIT_LINK}" class="btn btn-secondary">{$EDIT}</a>{/if}
 			{if isset($MODERATION) && count($MODERATION)}
 			  <div class="btn-group dropup">
@@ -59,11 +59,11 @@
 		    <div class="card-body">
 			  <center>
 				<div class="star-rating view">
-				  <span class="fa fa-star-o" data-rating="1" style="color:gold;"></span>
-				  <span class="fa fa-star-o" data-rating="2" style="color:gold"></span>
-				  <span class="fa fa-star-o" data-rating="3" style="color:gold;"></span>
-				  <span class="fa fa-star-o" data-rating="4" style="color:gold;"></span>
-				  <span class="fa fa-star-o" data-rating="5" style="color:gold;"></span>
+				  <span class="fa fa-star" data-rating="1" style="color:gold;"></span>
+				  <span class="fa fa-star" data-rating="2" style="color:gold"></span>
+				  <span class="fa fa-star" data-rating="3" style="color:gold;"></span>
+				  <span class="fa fa-star" data-rating="4" style="color:gold;"></span>
+				  <span class="fa fa-star" data-rating="5" style="color:gold;"></span>
 				  <input type="hidden" name="rating" class="rating-value" value="{$RATING}">
 				</div>
 			    {$VIEWS}<br />
@@ -101,18 +101,18 @@
 			<div class="card-body">
 			  {$comment.content}
 			  {if isset($DELETE_REVIEW)}
-				  <br /><br /><span class="pull-right"><a href="{$comment.delete_link}" onclick="return confirm('{$CONFIRM_DELETE_REVIEW}');">{$DELETE_REVIEW}</a></span><br />
+				  <br /><br /><span class="float-md-right"><a href="{$comment.delete_link}" onclick="return confirm('{$CONFIRM_DELETE_REVIEW}');">{$DELETE_REVIEW}</a></span><br />
 			  {/if}
 			  <hr />
 		      <div class="star-rating view" style="display:inline;">
-		        <span class="fa fa-star-o" data-rating="1" style="color:gold;"></span>
-		        <span class="fa fa-star-o" data-rating="2" style="color:gold"></span>
-		        <span class="fa fa-star-o" data-rating="3" style="color:gold;"></span>
-		        <span class="fa fa-star-o" data-rating="4" style="color:gold;"></span>
-		        <span class="fa fa-star-o" data-rating="5" style="color:gold;"></span>
+		        <span class="fa fa-star" data-rating="1" style="color:gold;"></span>
+		        <span class="fa fa-star" data-rating="2" style="color:gold"></span>
+		        <span class="fa fa-star" data-rating="3" style="color:gold;"></span>
+		        <span class="fa fa-star" data-rating="4" style="color:gold;"></span>
+		        <span class="fa fa-star" data-rating="5" style="color:gold;"></span>
 		        <input type="hidden" name="rating" class="rating-value" value="{$comment.rating}">
 		      </div> | {$comment.release_tag} | <span data-toggle="tooltip" data-original-title="{$comment.date_full}">{$comment.date}</span>
-			  <span class="pull-right">
+			  <span class="float-md-right">
 			    <a href="{$comment.user_profile}"><img class="rounded-circle" src="{$comment.user_avatar}" style="height:25px;width:25px;" alt="{$comment.username}" /></a> <a href="{$comment.user_profile}" style="{$comment.user_style}">{$comment.username}</a>
 			  </span>
 			</div>
@@ -129,11 +129,11 @@
 	  <form action="" method="post">
 	    <div class="form-group">
 		  <div class="star-rating set">
-		    <span class="fa fa-star-o" data-rating="1" style="color:gold;"></span>
-		    <span class="fa fa-star-o" data-rating="2" style="color:gold"></span>
-		    <span class="fa fa-star-o" data-rating="3" style="color:gold;"></span>
-		    <span class="fa fa-star-o" data-rating="4" style="color:gold;"></span>
-		    <span class="fa fa-star-o" data-rating="5" style="color:gold;"></span>
+		    <span class="far fa-star" data-rating="1" style="color:gold;"></span>
+		    <span class="far fa-star" data-rating="2" style="color:gold"></span>
+		    <span class="far fa-star" data-rating="3" style="color:gold;"></span>
+		    <span class="far fa-star" data-rating="4" style="color:gold;"></span>
+		    <span class="far fa-star" data-rating="5" style="color:gold;"></span>
 		    <input type="hidden" name="rating" class="rating-value" value="0">
 		  </div>
 		</div>
@@ -142,7 +142,7 @@
 		  <textarea style="width:100%" name="content" id="editor" rows="15"></textarea>
 		  {else}
 		  <textarea class="form-control" style="width:100%" id="markdown" name="content" rows="20"></textarea>
-		  <span class="pull-right"><i data-toggle="popover" data-placement="top" data-html="true" data-content="{$MARKDOWN_HELP}" class="fa fa-question-circle text-info" aria-hidden="true"></i></span>
+		  <span class="float-md-right"><i data-toggle="popover" data-placement="top" data-html="true" data-content="{$MARKDOWN_HELP}" class="fa fa-question-circle text-info" aria-hidden="true"></i></span>
 		  {/if}
 	    </div>
 		<div class="form-group">

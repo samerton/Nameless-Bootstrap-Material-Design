@@ -11,7 +11,7 @@
                 <div class="card-body">
                     <h2 class="card-title" style="display:inline;">{$CATEGORY_NAME}</h2>
 
-                    <span class="pull-right">
+                    <span class="float-md-right">
                       <a href="{$BACK_LINK}" class="btn btn-info">{$BACK}</a>
                       {if isset($NEW_RESOURCE)}
                         <a href="{$NEW_RESOURCE_LINK}" class="btn btn-primary">{$NEW_RESOURCE}</a>
@@ -43,11 +43,11 @@
                                     </td>
                                     <td>
                                         <div class="star-rating view">
-                                            <span class="fa fa-star-o" data-rating="1" style="color:gold;"></span>
-                                            <span class="fa fa-star-o" data-rating="2" style="color:gold"></span>
-                                            <span class="fa fa-star-o" data-rating="3" style="color:gold;"></span>
-                                            <span class="fa fa-star-o" data-rating="4" style="color:gold;"></span>
-                                            <span class="fa fa-star-o" data-rating="5" style="color:gold;"></span>
+                                            <span class="fa fa-star" data-rating="1" style="color:gold;"></span>
+                                            <span class="fa fa-star" data-rating="2" style="color:gold"></span>
+                                            <span class="fa fa-star" data-rating="3" style="color:gold;"></span>
+                                            <span class="fa fa-star" data-rating="4" style="color:gold;"></span>
+                                            <span class="fa fa-star" data-rating="5" style="color:gold;"></span>
                                             <input type="hidden" name="rating" class="rating-value" value="{$resource.rating}">
                                         </div>
                                         {$resource.views}<br />

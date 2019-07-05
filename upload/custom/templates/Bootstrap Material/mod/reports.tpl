@@ -9,7 +9,7 @@
 	  <div class="card">
 		<div class="card-body">
 		  <h2 class="card-title" style="display:inline;">{$REPORTS}</h2>
-		  <span class="pull-right">
+		  <span class="float-md-right">
 		    <a href="{$CHANGE_VIEW_LINK}" class="btn btn-info">{$CHANGE_VIEW}</a>
 		  </span>
 		  

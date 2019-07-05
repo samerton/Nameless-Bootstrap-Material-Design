@@ -25,7 +25,7 @@
                         <div class="form-group">
                             <label for="markdown">{$DESCRIPTION}</label>
                             <textarea class="form-control" style="width:100%" id="markdown" name="description" rows="20"></textarea>
-                            <span class="pull-right"><i data-toggle="popover" data-placement="top" data-html="true" data-content="{$MARKDOWN_HELP}" class="fa fa-question-circle text-info" aria-hidden="true"></i></span>
+                            <span class="float-md-right"><i data-toggle="popover" data-placement="top" data-html="true" data-content="{$MARKDOWN_HELP}" class="fa fa-question-circle text-info" aria-hidden="true"></i></span>
                         </div>
                     {else}
                         <div class="form-group">
