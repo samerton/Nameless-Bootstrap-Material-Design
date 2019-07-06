@@ -67,14 +67,6 @@
 		  </form>
 		  
 		  <br />
-		  
-		  <div class="card">
-		    <div class="card-body">  
-			  <h2>{$STATISTICS} <i class="fa fa-bar-chart"></i></h2>
-			  {$USERS_REGISTERED}<br />
-			  {$LATEST_MEMBER}
-			</div>
-		  </div>
 
 		  {if count($WIDGETS)}
 		    <br />
