@@ -64,6 +64,15 @@
                         <input type="hidden" name="token" value="{$FORM_TOKEN}">
 
                         <hr class="colorgraph">
+
+                        {if isset($RECAPTCHA)}
+                            <div class="form-group">
+                                <center>
+                                    <div class="g-recaptcha" data-sitekey="{$RECAPTCHA}"></div>
+                                </center>
+                            </div>
+                        {/if}
+
                         <div class="row">
                             <div class="col-xs-12 col-md-6">
                                 <input type="submit" class="btn btn-primary btn-block btn-lg" value="{$SIGN_IN}">

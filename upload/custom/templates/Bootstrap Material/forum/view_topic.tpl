@@ -85,7 +85,7 @@
                         <div class="row">
                             <div class="col-md-3">
                                 <center>
-                                    <img class="rounded" style="width:100px; height:100px;" src="{$reply.avatar}"/>
+                                    <a href="{$reply.profile}"><img class="rounded" style="width:100px; height:100px;" src="{$reply.avatar}"/></a>
                                     <br/><br/>
                                     <strong><a style="{$reply.user_style}" href="{$reply.profile}" data-poload="{$USER_INFO_URL}{$reply.user_id}" data-html="true" data-placement="top">{$reply.username}</a></strong>
                                     <br/>
@@ -100,6 +100,8 @@
                                     <hr/>
                                     <span rel="tooltip" data-toggle="hover"
                                           data-original-title="{$reply.user_registered_full}">{$reply.user_registered}</span><br/>
+                                    <span rel="tooltip" data-toggle="hover"
+                                          data-original-title="{$reply.last_seen_full}">{$reply.last_seen}</span><br/>
                                     {$reply.user_topics_count}<br/>
                                     {$reply.user_posts_count}<br/>
                                     <hr/>

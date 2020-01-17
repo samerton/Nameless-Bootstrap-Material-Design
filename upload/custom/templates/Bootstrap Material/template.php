@@ -2,7 +2,7 @@
 /*
  *	Made by Samerton
  *  https://github.com/NamelessMC/Nameless/
- *  NamelessMC version 2.0.0-pr6
+ *  NamelessMC version 2.0.0-pr7
  *
  *  License: MIT
  *
@@ -21,8 +21,8 @@ class Bootstrap_Material_Design_Template extends TemplateBase {
 
 		parent::__construct(
 			'Bootstrap Material Design',
-			'2.0.0-pr6',
-			'2.0.0-pr6',
+			'2.0.0-pr7',
+			'2.0.0-pr7',
 			'<a href="https://samerton.me/" target="_blank">Samerton</a>'
 		);
 
@@ -39,7 +39,7 @@ class Bootstrap_Material_Design_Template extends TemplateBase {
 			$nav_bg = $cache->retrieve('nav_bg');
 		} else {
 			$nav_bg = 'light';
-			$cache->store('nav_style', 'light');
+			$cache->store('nav_bg', 'light');
 		}
 
 		// Add any CSS files here

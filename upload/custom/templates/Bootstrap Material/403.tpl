@@ -36,28 +36,28 @@
 </head>
 
 <body>
-
 <br /><br /><br />
 <div class="container">
+    <center><h1>403</h1></center>
     <div class="row">
         <div class="col-md-6 offset-md-3">
             <div class="jumbotron">
                 <center>
-                    <h2>{$MAINTENANCE_TITLE}</h2>
-                    <hr />
-                    <h4>{$MAINTENANCE_MESSAGE}</h4>
-                    <div class="btn-group" role="group">
-                        <a href="#" class="btn btn-primary btn-lg" onclick="window.location.reload()">{$RETRY}</a>
+                    <h4>{$403_TITLE}</h4>
+                    <p>{$CONTENT}</p>
+                    {if !isset($LOGGED_IN_USER)}<p>{$CONTENT_LOGIN}</p>{/if}
+                    <div class="btn-group" role="group" aria-label="...">
+                        <button class="btn btn-primary btn-lg" onclick="javascript:history.go(-1)">{$BACK}</button>
+                        {if isset($LOGGED_IN_USER)}
+                            <a href="{$SITE_HOME}" class="btn btn-success btn-lg">{$HOME}</a>
+                        {else}
+                            <a href="{$LOGIN_LINK}" class="btn btn-success btn-lg">{$LOGIN}</a>
+                        {/if}
                     </div>
-                    {if isset($LOGIN)}
-                        <hr />
-                        <a href="{$LOGIN_LINK}" style="color: #fff">{$LOGIN}</a>
-                    {/if}
                 </center>
             </div>
         </div>
     </div>
 </div>
-
 </body>
-</html>
+</html> 
