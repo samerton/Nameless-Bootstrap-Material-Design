@@ -25,11 +25,11 @@
 	    {*Social media*}
 		{if !empty($SOCIAL_MEDIA_ICONS)}
 		  {foreach from=$SOCIAL_MEDIA_ICONS item=icon}
-		    {if $icon.link == '/contact/'}
+		    {if $icon.long eq 'envelope'}
 			<a href="{$icon.link}" target="_blank"><i id="social-{$icon.short}" class="fa fa-{$icon.long}-square fa-3x social"></i></a>
 		    {else}
 			<a href="{$icon.link}" target="_blank"><i id="social-{$icon.short}" class="fab fa-{$icon.long}-square fa-3x social"></i></a>
-		    {/if}}
+		    {/if}
 		  {/foreach}
 		{/if}
         <span class="float-md-right">
