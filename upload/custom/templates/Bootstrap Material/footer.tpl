@@ -25,7 +25,11 @@
 	    {*Social media*}
 		{if !empty($SOCIAL_MEDIA_ICONS)}
 		  {foreach from=$SOCIAL_MEDIA_ICONS item=icon}
-		    <a href="{$icon.link}" target="_blank"><i id="social-{$icon.short}" class="fa fa-{$icon.long}-square fa-3x social"></i></a>
+		    {if $icon.link == '/contact/'}
+			<a href="{$icon.link}" target="_blank"><i id="social-{$icon.short}" class="fa fa-{$icon.long}-square fa-3x social"></i></a>
+		    {else}
+			<a href="{$icon.link}" target="_blank"><i id="social-{$icon.short}" class="fab fa-{$icon.long}-square fa-3x social"></i></a>
+		    {/if}}
 		  {/foreach}
 		{/if}
         <span class="float-md-right">
